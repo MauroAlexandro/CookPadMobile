@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_collections"
+        android:icon="@mipmap/ic_import_contacts_black_36dp"
+        android:title="@string/title_collections" />
+
+    <item
+        android:id="@+id/navigation_recipes"
+        android:icon="@mipmap/ic_local_dining_black_36dp"
+        android:title="@string/title_recipes" />
+
+</menu>
