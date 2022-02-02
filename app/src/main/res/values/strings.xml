@@ -2,4 +2,12 @@
     <string name="app_name">CookPadMobile</string>
     <string name="title_collections">Collections</string>
     <string name="title_recipes">Recipes</string>
+
+    <!--Content Description-->
+    <string name="collections_image_row_image_content_desc">Collections Recipes Images</string>
+    <string name="fragment_collection_detail_recipe_content_desc">Collection Recipe Image</string>
+
+    <!--Collections List-->
+    <string name="recipes_count_text">%s recipes.</string>
+    <string name="end_of_list_reached">No more data to show!</string>
 </resources>

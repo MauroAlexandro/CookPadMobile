@@ -18,7 +18,7 @@ interface ApiEndpointInterface {
     fun getCollectionWithID(@Path(value = "id", encoded = true) id: String): Call<Collection>
 
     @GET("collections/{id}/recipes")
-    fun getRecipesFromCollection(@Path(value = "id", encoded = true) id: String): Call<Recipes>
+    fun getRecipesFromCollection(@Path(value = "id", encoded = true) id: Int): Call<Recipes>
 
     @GET("recipes/")
     fun getRecipes(): Call<Recipes>
