@@ -1,13 +1,41 @@
 package com.mauroalexandro.cookpadmobile.ui.recipes
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mauroalexandro.cookpadmobile.models.Recipes
+import com.mauroalexandro.cookpadmobile.network.ApiClient
+import com.mauroalexandro.cookpadmobile.network.Resource
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RecipesViewModel : ViewModel() {
+    private val getRecipes = MutableLiveData<Resource<Recipes>>()
+    private var apiClient: ApiClient = ApiClient.getInstance()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is recipes Fragment"
+    /**
+     * GET Recipes
+     */
+    fun getRecipesFromService() {
+        getRecipes.postValue(Resource.loading(null))
+
+        apiClient.getClient()?.getRecipes()?.enqueue(object :
+            Callback<Recipes?> {
+            override fun onResponse(call: Call<Recipes?>?, response: Response<Recipes?>) {
+                val resource: Recipes? = response.body()
+                getRecipes.postValue(Resource.success(resource))
+            }
+
+            override fun onFailure(call: Call<Recipes?>, t: Throwable) {
+                Log.e("ERROR", "Error: "+t.message)
+                getRecipes.postValue(t.message?.let { Resource.error(it,null) })
+                call.cancel()
+            }
+        })
     }
-    val text: LiveData<String> = _text
+
+    fun getRecipes(): MutableLiveData<Resource<Recipes>> {
+        return getRecipes
+    }
 }

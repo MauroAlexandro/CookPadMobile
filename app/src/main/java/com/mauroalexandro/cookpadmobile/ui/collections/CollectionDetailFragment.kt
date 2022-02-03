@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mauroalexandro.cookpadmobile.R
-import com.mauroalexandro.cookpadmobile.adapters.CollectionsRecyclerViewAdapter
 import com.mauroalexandro.cookpadmobile.adapters.RecipesRecyclerViewAdapter
 import com.mauroalexandro.cookpadmobile.databinding.FragmentCollectionsDetailBinding
 import com.mauroalexandro.cookpadmobile.models.Recipes
@@ -97,7 +96,7 @@ class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialo
                     }
                     Status.ERROR -> {
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
                     }
                 }
 
@@ -106,7 +105,7 @@ class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialo
     }
 
     private fun loadValuesIntoLayout() {
-        if(lastElement <= listSize-1 && recipesRecyclerViewAdapter.itemCount < listSize) {
+        if(lastElement <= listSize-1 && recipesRecyclerViewAdapter.itemCount < listSize-1) {
             if(firstElement >= lastElement) {
                 firstElement = 0
                 lastElement = listSize - 1
@@ -117,8 +116,7 @@ class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialo
 
             val sublist = ArrayList(recipes.subList(firstElement, lastElement))
             recipesRecyclerViewAdapter.setCollections(sublist)
-        } else
-            Toast.makeText(context, resources.getString(R.string.end_of_list_reached), Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun recipeItemClick(recipeID: Int) {

@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.mauroalexandro.cookpadmobile.R
 import com.mauroalexandro.cookpadmobile.models.Step
 import java.lang.StringBuilder

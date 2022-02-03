@@ -1,5 +1,6 @@
 package com.mauroalexandro.cookpadmobile.ui.collections
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mauroalexandro.cookpadmobile.R
 import com.mauroalexandro.cookpadmobile.adapters.CollectionsRecyclerViewAdapter
 import com.mauroalexandro.cookpadmobile.databinding.FragmentCollectionsBinding
 import com.mauroalexandro.cookpadmobile.models.Collections
@@ -35,7 +35,7 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         collectionsViewModel =
             ViewModelProvider(this)[CollectionsViewModel::class.java]
 
@@ -44,10 +44,10 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
         _binding = FragmentCollectionsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        utils.setCollectionsBinding(_binding!!)
+
         setViewModel()
         collectionsViewModel.getCollectionsFromService()
-        /*val userName = utils.getStringSharedPreferencesValue(requireContext(),"userName")
-        authoredViewModel.getUserAuthoredCodeChallenges(userName)*/
 
         binding.collectionsRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -63,8 +63,10 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
         return root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onAttach(context: Context) {
+        firstElement = 0
+        lastElement = 10
+        super.onAttach(context)
     }
 
     override fun onDestroyView() {
@@ -73,11 +75,13 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
     }
 
     private fun setViewModel() {
-        //Get Collections Challenges
+        //Get Collections
         activity?.let { it ->
             collectionsViewModel.getCollections().observe(it, {
                 when (it.status) {
                     Status.SUCCESS -> {
+                        if(_binding == null)
+                            _binding = utils.getCollectionsBindign()
                         binding.progressBar.visibility = View.GONE
                         it.data?.let {
                             collections -> this.collections = collections
@@ -87,15 +91,19 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
                         }
                         binding.collectionsRecyclerview.visibility = View.VISIBLE
                         binding.collectionsRecyclerview.adapter = collectionsRecyclerViewAdapter
-                        binding.collectionsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+                        binding.collectionsRecyclerview.layoutManager = LinearLayoutManager(activity)
                     }
                     Status.LOADING -> {
+                        if(_binding == null)
+                            _binding = utils.getCollectionsBindign()
                         binding.progressBar.visibility = View.VISIBLE
                         binding.collectionsRecyclerview.visibility = View.GONE
                     }
                     Status.ERROR -> {
+                        if(_binding == null)
+                            _binding = utils.getCollectionsBindign()
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
                     }
                 }
             })
@@ -103,7 +111,7 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
     }
 
     private fun loadValuesIntoAdapter() {
-        if(lastElement <= listSize-1 && collectionsRecyclerViewAdapter.itemCount < listSize) {
+        if(lastElement <= listSize-1 && collectionsRecyclerViewAdapter.itemCount < listSize-1) {
             if(firstElement >= lastElement) {
                 firstElement = 0
                 lastElement = listSize - 1
@@ -115,8 +123,7 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
             val sublist = ArrayList(collections.subList(firstElement, lastElement))
             collectionsRecyclerViewAdapter.setCollections(sublist)
 
-        } else
-            Toast.makeText(context, resources.getString(R.string.end_of_list_reached), Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun collectionItemClick(collectionID: Int) {

@@ -35,27 +35,6 @@ class CollectionsViewModel : ViewModel() {
         })
     }
 
-    /**
-     * GET Collection from ID
-     */
-    /*fun getCollections(userName: String) {
-        getCollections.postValue(Resource.loading(null))
-
-        apiClient.getClient()?.getAuthoredCodeChallenges(userName)?.enqueue(object :
-            Callback<AuthoredChallenges?> {
-            override fun onResponse(call: Call<AuthoredChallenges?>?, response: Response<AuthoredChallenges?>) {
-                val resource: AuthoredChallenges? = response.body()
-                getCollections.postValue(Resource.success(resource))
-            }
-
-            override fun onFailure(call: Call<AuthoredChallenges?>, t: Throwable) {
-                Log.e("ERROR", "Error: "+t.message)
-                getCollections.postValue(t.message?.let { Resource.error(it,null) })
-                call.cancel()
-            }
-        })
-    }*/
-
     fun getCollections(): MutableLiveData<Resource<Collections>> {
         return getCollections
     }

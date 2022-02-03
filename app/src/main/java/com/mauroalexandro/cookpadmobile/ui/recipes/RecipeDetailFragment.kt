@@ -11,7 +11,6 @@ import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,7 +20,6 @@ import com.mauroalexandro.cookpadmobile.adapters.StepsRecyclerViewAdapter
 import com.mauroalexandro.cookpadmobile.databinding.RecipeDetailRowBinding
 import com.mauroalexandro.cookpadmobile.models.Recipe
 import com.mauroalexandro.cookpadmobile.network.Status
-import com.mauroalexandro.cookpadmobile.utils.Utils
 
 /**
  * Created by Mauro_Chegancas
@@ -30,14 +28,9 @@ class RecipeDetailFragment(private val recipeID: Int) : BottomSheetDialogFragmen
     private lateinit var recipeDetailViewModel: RecipeDetailViewModel
     private lateinit var recipesIngredientsAdapter: RecipeIngredientsAdapter
     private lateinit var stepsRecyclerViewAdapter: StepsRecyclerViewAdapter
-    //private lateinit var recipesRecyclerViewAdapter: RecipesRecyclerViewAdapter
     private lateinit var recipe: Recipe
     private var _binding: RecipeDetailRowBinding? = null
     private val binding get() = _binding!!
-    private var firstElement = 0
-    private var lastElement = 10
-    private var listSize = 0
-    private var utils: Utils = Utils.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +46,6 @@ class RecipeDetailFragment(private val recipeID: Int) : BottomSheetDialogFragmen
     {
         recipeDetailViewModel = ViewModelProvider(this)[RecipeDetailViewModel::class.java]
         recipeDetailViewModel.getRecipeFromService(recipeID)
-
-
-        //recipesRecyclerViewAdapter = RecipesRecyclerViewAdapter(requireContext(), this)
 
         _binding = RecipeDetailRowBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -87,14 +77,11 @@ class RecipeDetailFragment(private val recipeID: Int) : BottomSheetDialogFragmen
                             recipeFromRecipes -> recipe = recipeFromRecipes
                             loadValuesIntoLayout()
                         }
-                        /*binding.collectionsRecipesRecyclerview.visibility = View.VISIBLE
-                        binding.collectionsRecipesRecyclerview.adapter = recipesRecyclerViewAdapter
-                        binding.collectionsRecipesRecyclerview.layoutManager = LinearLayoutManager(requireContext())*/
                     }
                     Status.LOADING -> {
                     }
                     Status.ERROR -> {
-                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
                     }
                 }
 
@@ -115,10 +102,9 @@ class RecipeDetailFragment(private val recipeID: Int) : BottomSheetDialogFragmen
                 .with(context!!)
                 .load(recipe.image_url)
                 .fitCenter()
-                //.apply(RequestOptions().override(500, 500))
                 .into(binding.recipeDetailRowImage)
 
-        //Ingridients Title
+        //Ingredients Title
         binding.recipeDetailRowIngredientsTitle.text = resources.getString(R.string.ingredients_title)
 
         //Ingredients List
@@ -135,14 +121,5 @@ class RecipeDetailFragment(private val recipeID: Int) : BottomSheetDialogFragmen
         binding.recipeDetailRowStepsRecyclerview.visibility = View.VISIBLE
         binding.recipeDetailRowStepsRecyclerview.adapter = stepsRecyclerViewAdapter
         binding.recipeDetailRowStepsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-
-       /* if(lastElement <= listSize-1 && recipesRecyclerViewAdapter.itemCount < listSize) {
-            if(listSize <= recipesRecyclerViewAdapter.itemCount + 10)
-                lastElement = listSize-1
-
-            val sublist = ArrayList(recipes.subList(firstElement, lastElement))
-            recipesRecyclerViewAdapter.setCollections(sublist)
-        } else
-            Toast.makeText(context, resources.getString(R.string.end_of_list_reached), Toast.LENGTH_LONG).show()*/
     }
 }

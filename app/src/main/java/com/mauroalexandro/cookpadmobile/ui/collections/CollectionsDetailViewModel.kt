@@ -3,7 +3,6 @@ package com.mauroalexandro.cookpadmobile.ui.collections
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mauroalexandro.cookpadmobile.models.Collections
 import com.mauroalexandro.cookpadmobile.models.Recipes
 import com.mauroalexandro.cookpadmobile.network.ApiClient
 import com.mauroalexandro.cookpadmobile.network.Resource

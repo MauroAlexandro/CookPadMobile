@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mauroalexandro.cookpadmobile.models.Recipe
-import com.mauroalexandro.cookpadmobile.models.Recipes
 import com.mauroalexandro.cookpadmobile.network.ApiClient
 import com.mauroalexandro.cookpadmobile.network.Resource
 import retrofit2.Call

@@ -1,6 +1,8 @@
 package com.mauroalexandro.cookpadmobile.utils
 
 import androidx.fragment.app.FragmentActivity
+import com.mauroalexandro.cookpadmobile.databinding.FragmentCollectionsBinding
+import com.mauroalexandro.cookpadmobile.databinding.FragmentRecipesBinding
 import com.mauroalexandro.cookpadmobile.ui.collections.CollectionDetailFragment
 import com.mauroalexandro.cookpadmobile.ui.recipes.RecipeDetailFragment
 
@@ -18,6 +20,9 @@ class Utils {
             return INSTANCE as Utils
         }
     }
+
+    private lateinit var _recipesBinding: FragmentRecipesBinding
+    private lateinit var _collectionsBinding: FragmentCollectionsBinding
 
     /**
      * Call CollectionDetailsFragment
@@ -42,4 +47,33 @@ class Utils {
                 "recipe_detail_dialog_fragment"
             )
     }
+
+    /**
+     * Set Recipes Binding
+     */
+    fun setRecipesBinding(_binding: FragmentRecipesBinding) {
+        _recipesBinding = _binding
+    }
+
+    /**
+     * Get Recipes Binding
+     */
+    fun getRecipesBindign(): FragmentRecipesBinding{
+        return _recipesBinding
+    }
+
+    /**
+     * Set Collections Binding
+     */
+    fun setCollectionsBinding(_binding: FragmentCollectionsBinding) {
+        _collectionsBinding = _binding
+    }
+
+    /**
+     * Get Collections Binding
+     */
+    fun getCollectionsBindign(): FragmentCollectionsBinding{
+        return _collectionsBinding
+    }
+
 }
