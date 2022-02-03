@@ -73,7 +73,7 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
     }
 
     private fun setViewModel() {
-        //Get Authored Code Challenges
+        //Get Collections Challenges
         activity?.let { it ->
             collectionsViewModel.getCollections().observe(it, {
                 when (it.status) {
@@ -104,11 +104,17 @@ class CollectionsFragment : Fragment(), CollectionItemCallback {
 
     private fun loadValuesIntoAdapter() {
         if(lastElement <= listSize-1 && collectionsRecyclerViewAdapter.itemCount < listSize) {
+            if(firstElement >= lastElement) {
+                firstElement = 0
+                lastElement = listSize - 1
+            }
+
             if(listSize <= collectionsRecyclerViewAdapter.itemCount + 10)
                 lastElement = listSize-1
 
             val sublist = ArrayList(collections.subList(firstElement, lastElement))
             collectionsRecyclerViewAdapter.setCollections(sublist)
+
         } else
             Toast.makeText(context, resources.getString(R.string.end_of_list_reached), Toast.LENGTH_LONG).show()
     }

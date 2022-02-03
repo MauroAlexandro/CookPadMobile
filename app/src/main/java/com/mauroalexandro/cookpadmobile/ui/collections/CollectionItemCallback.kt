@@ -5,5 +5,4 @@ package com.mauroalexandro.cookpadmobile.ui.collections
  */
 interface CollectionItemCallback {
     fun collectionItemClick(collectionID: Int)
-    //fun recipeItemClick(recipeID: Int)
 }

@@ -4,15 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:id="@+id/recipe_row_layout">
+    android:layout_marginBottom="30dp">
 
     <ImageView
-        android:id="@+id/recipe_row_Image"
+        android:id="@+id/steps_row_Image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="textStart"
         android:textSize="@dimen/collections_recipes_count_size"
@@ -22,18 +20,30 @@
         android:contentDescription="@string/fragment_collection_detail_recipe_content_desc" />
 
     <TextView
-        android:id="@+id/recipe_row_title"
-        android:layout_width="match_parent"
+        android:id="@+id/steps_row_number"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="@dimen/collections_title_size"
         android:textStyle="bold"
         android:autoLink="web"
         android:linksClickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_row_Image" />
+        app:layout_constraintTop_toBottomOf="@+id/steps_row_Image" />
+
+    <TextView
+        android:id="@+id/steps_row_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/collections_description_size"
+        android:autoLink="web"
+        android:linksClickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/steps_row_number"
+        app:layout_constraintTop_toBottomOf="@+id/steps_row_Image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

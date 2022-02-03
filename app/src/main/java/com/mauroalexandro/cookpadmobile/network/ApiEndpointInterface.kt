@@ -2,6 +2,7 @@ package com.mauroalexandro.cookpadmobile.network
 
 import com.mauroalexandro.cookpadmobile.models.Collection
 import com.mauroalexandro.cookpadmobile.models.Collections
+import com.mauroalexandro.cookpadmobile.models.Recipe
 import com.mauroalexandro.cookpadmobile.models.Recipes
 import retrofit2.Call
 import retrofit2.http.GET
@@ -24,5 +25,5 @@ interface ApiEndpointInterface {
     fun getRecipes(): Call<Recipes>
 
     @GET("recipes/{id}")
-    fun getRecipeWithID(@Path(value = "id", encoded = true) id: String): Call<Recipes>
+    fun getRecipeWithID(@Path(value = "id", encoded = true) id: Int): Call<Recipe>
 }

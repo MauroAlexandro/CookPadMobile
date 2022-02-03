@@ -7,20 +7,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.mauroalexandro.cookpadmobile.R
 import com.mauroalexandro.cookpadmobile.models.Recipe
-import com.mauroalexandro.cookpadmobile.ui.collections.CollectionItemCallback
+import com.mauroalexandro.cookpadmobile.ui.recipes.RecipeItemCallback
 
 /**
  * Created by Mauro_Chegancas
  */
 class RecipesRecyclerViewAdapter(
-    private val context: Context/*,
-    private val collectionItemCallback: CollectionItemCallback*/
+    private val context: Context,
+    private val recipeItemCallback: RecipeItemCallback
 ) : RecyclerView.Adapter<RecipesRecyclerViewAdapter.RecipesViewHolder>() {
     private var recipesList = arrayListOf<Recipe>()
 
@@ -42,7 +40,7 @@ class RecipesRecyclerViewAdapter(
         recipesViewHolder.recipeTitle.text = recipe.title
 
         //Recipe Image
-        if(recipe.image_url.isNotEmpty())
+        if(!recipe.image_url.isNullOrEmpty())
             Glide
                 .with(context)
                 .load(recipe.image_url)
@@ -50,9 +48,9 @@ class RecipesRecyclerViewAdapter(
                 .into(recipesViewHolder.recipeImage)
 
         //OnClick
-        /*recipesViewHolder.recipeLayout.setOnClickListener {
-            collectionItemCallback.collectionItemClick(recipe.id)
-        }*/
+        recipesViewHolder.recipeLayout.setOnClickListener {
+            recipeItemCallback.recipeItemClick(recipe.id)
+        }
     }
 
     override fun getItemCount(): Int {

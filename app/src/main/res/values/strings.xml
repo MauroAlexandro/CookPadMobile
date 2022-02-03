@@ -10,4 +10,9 @@
     <!--Collections List-->
     <string name="recipes_count_text">%s recipes.</string>
     <string name="end_of_list_reached">No more data to show!</string>
+
+    <!--Recipe Detail-->
+    <string name="ingredients_title">Ingredients:</string>
+    <string name="steps_title">Steps:</string>
+
 </resources>

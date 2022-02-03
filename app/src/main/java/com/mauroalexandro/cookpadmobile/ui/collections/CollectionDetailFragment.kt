@@ -19,12 +19,13 @@ import com.mauroalexandro.cookpadmobile.adapters.RecipesRecyclerViewAdapter
 import com.mauroalexandro.cookpadmobile.databinding.FragmentCollectionsDetailBinding
 import com.mauroalexandro.cookpadmobile.models.Recipes
 import com.mauroalexandro.cookpadmobile.network.Status
+import com.mauroalexandro.cookpadmobile.ui.recipes.RecipeItemCallback
 import com.mauroalexandro.cookpadmobile.utils.Utils
 
 /**
  * Created by Mauro_Chegancas
  */
-class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialogFragment() {
+class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialogFragment(), RecipeItemCallback {
     private lateinit var collectionsDetailViewModel: CollectionsDetailViewModel
     private lateinit var recipesRecyclerViewAdapter: RecipesRecyclerViewAdapter
     private lateinit var recipes: Recipes
@@ -50,7 +51,7 @@ class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialo
         collectionsDetailViewModel = ViewModelProvider(this)[CollectionsDetailViewModel::class.java]
         collectionsDetailViewModel.getRecipesFromService(collectionID)
 
-        recipesRecyclerViewAdapter = RecipesRecyclerViewAdapter(requireContext()/*, this*/)
+        recipesRecyclerViewAdapter = RecipesRecyclerViewAdapter(requireContext(), this)
 
         _binding = FragmentCollectionsDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -74,7 +75,7 @@ class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialo
     }
 
     private fun setViewModel() {
-        //Get Code Challenge Detail
+        //Get Recipes Detail
         activity?.let { it ->
             collectionsDetailViewModel.getRecipes().observe(it, {
                 when (it.status) {
@@ -106,6 +107,11 @@ class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialo
 
     private fun loadValuesIntoLayout() {
         if(lastElement <= listSize-1 && recipesRecyclerViewAdapter.itemCount < listSize) {
+            if(firstElement >= lastElement) {
+                firstElement = 0
+                lastElement = listSize - 1
+            }
+
             if(listSize <= recipesRecyclerViewAdapter.itemCount + 10)
                 lastElement = listSize-1
 
@@ -113,5 +119,10 @@ class CollectionDetailFragment(private val collectionID: Int) : BottomSheetDialo
             recipesRecyclerViewAdapter.setCollections(sublist)
         } else
             Toast.makeText(context, resources.getString(R.string.end_of_list_reached), Toast.LENGTH_LONG).show()
+    }
+
+    override fun recipeItemClick(recipeID: Int) {
+        this.dismiss()
+        utils.openRecipesDetailsFragment(requireActivity(), recipeID)
     }
 }

@@ -10,9 +10,8 @@
 
     <!--Pastel Colors-->
     <color name="pastel_light_green">#FF8CB596</color>
-    <color name="pastel_green">#FF718e88</color>
-    <color name="pastel_sand_yellow">#FFDAEAF6</color>
-    <!--
-    <color name="pastel_sand_yellow">#FFFCF5C7</color>-->
+    <color name="pastel_green">#FF718E88</color>
+    <color name="pastel_sand_yellow">#FF8CB596</color>
+    <color name="color_test">#FF213502</color>
 
 </resources>

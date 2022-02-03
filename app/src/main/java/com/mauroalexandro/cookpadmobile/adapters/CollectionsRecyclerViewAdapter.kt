@@ -47,7 +47,7 @@ class CollectionsRecyclerViewAdapter(
         collectionsViewHolder.collectionRecipesCount.text = recipesCountText
 
         //Collections Image List
-        val collectionsImageAdapter = CollectionsImageAdapter(context, collection.preview_image_urls)
+        val collectionsImageAdapter = CollectionsImageAdapter(context, collection.preview_image_urls, collectionItemCallback, collection.id)
         collectionsViewHolder.collectionImageList.adapter = collectionsImageAdapter
         collectionsViewHolder.collectionImageList.layoutManager = LinearLayoutManager(
             context,

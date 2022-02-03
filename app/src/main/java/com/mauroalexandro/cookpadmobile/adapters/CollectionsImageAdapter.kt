@@ -9,11 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mauroalexandro.cookpadmobile.R
+import com.mauroalexandro.cookpadmobile.ui.collections.CollectionItemCallback
 
 /**
  * Created by Mauro_Chegancas
  */
-class CollectionsImageAdapter(private val context: Context, private val items: List<String>) : RecyclerView.Adapter<ViewHolder>() {
+class CollectionsImageAdapter(
+    private val context: Context,
+    private val items: List<String>,
+    private val collectionItemCallback: CollectionItemCallback,
+    private val collectionID: Int
+) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(context).inflate(R.layout.collection_image_row, parent, false)
@@ -30,6 +36,11 @@ class CollectionsImageAdapter(private val context: Context, private val items: L
                 .centerCrop()
                 .apply(RequestOptions().override(500, 500))
                 .into(holder.collectionImage)
+
+        //OnClick
+        holder.collectionImage.setOnClickListener {
+            collectionItemCallback.collectionItemClick(collectionID)
+        }
     }
 
     override fun getItemCount(): Int {
